@@ -1,1 +1,1 @@
-# gpt-image2-prompts
+# GPT image 2 Prompts

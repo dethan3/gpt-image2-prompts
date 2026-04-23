@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awesome GPT-Image-2 Prompts · 提示词库</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap');
+        
+        :root {
+            --primary: #6366f1;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+        }
+        
+        .prompt-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .prompt-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 10px rgb(99 102 241 / 0.5);
+        }
+        
+        .modal {
+            animation: modalPop 0.3s ease-out;
+        }
+        
+        .prompt-text {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Navbar -->
+    <nav class="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-magic text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight">Awesome GPT-Image-2</h1>
+                    <p class="text-xs text-zinc-500 -mt-1">提示词库 · by EvoLinkAI</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-x-4">
+                <a href="https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts" target="_blank" 
+                   class="flex items-center gap-x-2 px-4 py-2 text-sm hover:bg-zinc-900 rounded-2xl transition-colors">
+                    <i class="fa-brands fa-github"></i>
+                    <span>Star on GitHub</span>
+                </a>
+                <a href="https://evolink.ai/gpt-image-2" target="_blank"
+                   class="px-5 py-2 bg-white text-zinc-950 rounded-2xl text-sm font-semibold flex items-center gap-x-2 hover:bg-zinc-100 transition-colors">
+                    <span>立即体验 GPT-Image-2</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+        <div class="inline-flex items-center gap-x-2 bg-zinc-900 px-4 py-1 rounded-full text-sm mb-6 border border-zinc-800">
+            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <span>已收录 <span id="total-count" class="font-semibold">100+</span> 条高质量提示词</span>
+        </div>
+        
+        <h2 class="text-6xl font-bold tracking-tighter mb-4">发现最强<br>GPT-Image-2 提示词</h2>
+        <p class="text-xl text-zinc-400 max-w-2xl mx-auto">来自 X/Twitter 创作者社区的精选案例 · 支持人像、海报、角色、UI 等全场景</p>
+        
+        <!-- Search -->
+        <div class="max-w-2xl mx-auto mt-10 relative">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500"></i>
+                <input id="search-input" 
+                       type="text" 
+                       placeholder="搜索提示词、作者、主题（如 人像 / 海报 / UI）..."
+                       class="w-full bg-zinc-900 border border-zinc-800 focus:border-indigo-600 pl-12 pr-6 py-4 rounded-3xl text-lg placeholder:text-zinc-500 focus:outline-none">
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="max-w-7xl mx-auto px-6 mb-8 flex flex-wrap items-center gap-3">
+        <div class="flex items-center gap-x-2 text-sm">
+            <span class="text-zinc-500">筛选：</span>
+            <button onclick="filterByCategory('all')" class="category-btn active px-4 py-1.5 rounded-2xl text-sm bg-indigo-600 text-white">全部</button>
+            <button onclick="filterByCategory('portrait')" class="category-btn px-4 py-1.5 rounded-2xl text-sm hover:bg-zinc-800">人像摄影</button>
+            <button onclick="filterByCategory('poster')" class="category-btn px-4 py-1.5 rounded-2xl text-sm hover:bg-zinc-800">海报插画</button>
+            <button onclick="filterByCategory('character')" class="category-btn px-4 py-1.5 rounded-2xl text-sm hover:bg-zinc-800">角色设计</button>
+            <button onclick="filterByCategory('ui')" class="category-btn px-4 py-1.5 rounded-2xl text-sm hover:bg-zinc-800">UI 与截图</button>
+        </div>
+        
+        <div class="flex-1"></div>
+        
+        <select id="sort-select" onchange="sortPrompts()" class="bg-zinc-900 border border-zinc-800 rounded-2xl px-4 py-2 text-sm">
+            <option value="likes">按点赞数排序</option>
+            <option value="date">按发布时间排序</option>
+        </select>
+    </div>
+
+    <!-- Prompt Grid -->
+    <div class="max-w-7xl mx-auto px-6 pb-20">
+        <div id="prompt-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- JS 动态渲染 -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800 py-12 text-center text-sm text-zinc-500">
+        <p>数据来源于 <a href="https://github.com/EvoLinkAI/awesome-gpt-image-2-prompts" class="hover:text-white">EvoLinkAI/awesome-gpt-image-2-prompts</a> · 欢迎提交 PR 贡献新提示词</p>
+        <p class="mt-2">Made with ❤️ for the AIGC community · 2026</p>
+    </footer>
+
+    <!-- Detail Modal -->
+    <div id="modal" onclick="closeModal()" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="modal bg-zinc-900 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-zinc-700">
+            <!-- Modal Content injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        let allPrompts = [];
+        let currentFilter = 'all';
+
+        // Tailwind script
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#6366f1');
+        }
+
+        // 加载数据
+        async function loadPrompts() {
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/EvoLinkAI/awesome-gpt-image-2-prompts/main/gpt_image2_prompts.json');
+                allPrompts = await res.json();
+                
+                // 添加简单分类（基于关键词）
+                allPrompts.forEach(p => {
+                    const text = (p.text || '').toLowerCase();
+                    if (text.includes('portrait') || text.includes('人像') || text.includes('idol') || text.includes('摄影')) {
+                        p.category = 'portrait';
+                    } else if (text.includes('poster') || text.includes('海报') || text.includes('插画')) {
+                        p.category = 'poster';
+                    } else if (text.includes('character') || text.includes('角色') || text.includes('mecha') || text.includes('gal game')) {
+                        p.category = 'character';
+                    } else if (text.includes('ui') || text.includes('截图') || text.includes('朋友圈') || text.includes('界面')) {
+                        p.category = 'ui';
+                    } else {
+                        p.category = 'other';
+                    }
+                });
+                
+                document.getElementById('total-count').textContent = allPrompts.length;
+                renderPrompts(allPrompts);
+            } catch (e) {
+                console.error('加载失败', e);
+                // 降级：显示提示
+                document.getElementById('prompt-grid').innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-red-400">数据加载失败，请刷新页面或直接访问 GitHub 仓库</p>
+                    </div>`;
+            }
+        }
+
+        function renderPrompts(prompts) {
+            const grid = document.getElementById('prompt-grid');
+            grid.innerHTML = '';
+
+            if (prompts.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500">没有找到匹配的提示词</div>`;
+                return;
+            }
+
+            prompts.forEach(prompt => {
+                const card = document.createElement('div');
+                card.className = `prompt-card bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden cursor-pointer`;
+                
+                const imgUrl = prompt.media && prompt.media[0] ? prompt.media[0].url : 'https://picsum.photos/id/1015/600/400';
+                const shortPrompt = (prompt.text || '').slice(0, 120) + '...';
+                
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${imgUrl}" class="w-full aspect-[4/3] object-cover" alt="GPT-Image-2 生成结果" loading="lazy">
+                        <div class="absolute top-3 right-3 bg-black/70 px-2 py-0.5 rounded-full text-xs flex items-center gap-x-1">
+                            <i class="fa-solid fa-heart text-red-500"></i>
+                            <span>${prompt.likeCount || 0}</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-x-2">
+                                <img src="https://unavatar.io/twitter/${prompt.author}" class="w-6 h-6 rounded-full ring-1 ring-zinc-700" alt="${prompt.author}">
+                                <span class="text-sm font-medium">${prompt.author}</span>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 bg-zinc-800 rounded-full">${prompt.lang || 'zh'}</span>
+                        </div>
+                        
+                        <p class="text-sm text-zinc-400 line-clamp-3 mb-4 prompt-text">${shortPrompt}</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <button onclick="event.stopImmediatePropagation(); copyPrompt('${prompt.id}', this)" 
+                                    class="flex items-center gap-x-1.5 text-xs px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded-2xl transition-colors">
+                                <i class="fa-solid fa-copy"></i>
+                                <span>复制</span>
+                            </button>
+                            
+                            <button onclick="event.stopImmediatePropagation(); showDetail('${prompt.id}')" 
+                                    class="text-xs px-3 py-1.5 text-indigo-400 hover:text-indigo-300 flex items-center gap-x-1">
+                                查看详情 <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                card.onclick = () => showDetail(prompt.id);
+                grid.appendChild(card);
+            });
+        }
+
+        function filterByCategory(category) {
+            // 切换按钮样式
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active', 'bg-indigo-600', 'text-white'));
+            event.currentTarget.classList.add('active', 'bg-indigo-600', 'text-white');
+            
+            currentFilter = category;
+            
+            let filtered = allPrompts;
+            if (category !== 'all') {
+                filtered = allPrompts.filter(p => p.category === category);
+            }
+            
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
+            if (searchVal) {
+                filtered = filtered.filter(p => 
+                    (p.text || '').toLowerCase().includes(searchVal) || 
+                    (p.author || '').toLowerCase().includes(searchVal)
+                );
+            }
+            
+            renderPrompts(filtered);
+        }
+
+        function sortPrompts() {
+            const sortType = document.getElementById('sort-select').value;
+            let sorted = [...allPrompts];
+            
+            if (sortType === 'likes') {
+                sorted.sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0));
+            } else if (sortType === 'date') {
+                sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            }
+            
+            // 应用当前筛选
+            if (currentFilter !== 'all') {
+                sorted = sorted.filter(p => p.category === currentFilter);
+            }
+            
+            const searchVal = document.getElementById('search-input').value.toLowerCase();
+            if (searchVal) {
+                sorted = sorted.filter(p => 
+                    (p.text || '').toLowerCase().includes(searchVal) || 
+                    (p.author || '').toLowerCase().includes(searchVal)
+                );
+            }
+            
+            renderPrompts(sorted);
+        }
+
+        function copyPrompt(id, btnElement) {
+            const prompt = allPrompts.find(p => p.id === id);
+            if (!prompt) return;
+            
+            navigator.clipboard.writeText(prompt.text).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = `<i class="fa-solid fa-check"></i> <span>已复制</span>`;
+                btnElement.style.backgroundColor = '#166534';
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.style.backgroundColor = '';
+                }, 1500);
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = prompt.text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('已复制到剪贴板！');
+            });
+        }
+
+        function showDetail(id) {
+            const prompt = allPrompts.find(p => p.id === id);
+            if (!prompt) return;
+
+            const modal = document.getElementById('modal');
+            const modalContent = modal.querySelector('div');
+            
+            const imgHtml = prompt.media && prompt.media.length > 0 
+                ? prompt.media.map(m => `
+                    <div class="relative">
+                        <img src="${m.url}" class="w-full rounded-2xl border border-zinc-700" alt="生成结果">
+                        ${m.type === 'video' ? '<div class="absolute inset-0 flex items-center justify-center"><i class="fa-solid fa-play text-white text-4xl opacity-80"></i></div>' : ''}
+                    </div>
+                  `).join('') 
+                : '<div class="text-center py-8 text-zinc-500">暂无预览图</div>';
+
+            modalContent.innerHTML = `
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="flex items-center gap-x-3">
+                                <img src="https://unavatar.io/twitter/${prompt.author}" class="w-9 h-9 rounded-full" alt="">
+                                <div>
+                                    <div class="font-semibold">${prompt.author}</div>
+                                    <div class="text-xs text-zinc-500">${new Date(prompt.createdAt).toLocaleDateString('zh-CN')}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="closeModal()" class="text-zinc-400 hover:text-white text-2xl">×</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                        <!-- 图片区域 -->
+                        <div class="lg:col-span-3 space-y-4">
+                            ${imgHtml}
+                        </div>
+                        
+                        <!-- 提示词区域 -->
+                        <div class="lg:col-span-2">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="text-sm font-semibold text-zinc-400">完整提示词</div>
+                                <button onclick="copyPrompt('${prompt.id}', this)" 
+                                        class="text-xs flex items-center gap-x-1 px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded-2xl">
+                                    <i class="fa-solid fa-copy"></i> 复制全部
+                                </button>
+                            </div>
+                            
+                            <div class="bg-zinc-950 border border-zinc-700 rounded-2xl p-5 text-sm max-h-[420px] overflow-auto prompt-text whitespace-pre-wrap">
+                                ${prompt.text}
+                            </div>
+                            
+                            <div class="mt-6 flex flex-wrap gap-2">
+                                <a href="${prompt.url}" target="_blank" 
+                                   class="inline-flex items-center gap-x-2 text-xs px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-2xl">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                    <span>查看原文</span>
+                                </a>
+                                
+                                <a href="https://evolink.ai/gpt-image-2?utm_source=awesome-prompts" target="_blank" 
+                                   class="inline-flex items-center gap-x-2 text-xs px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-2xl text-white">
+                                    <span>在 Evolink 使用此提示词</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // 搜索监听
+        function initSearch() {
+            const input = document.getElementById('search-input');
+            input.addEventListener('input', () => {
+                const val = input.value.toLowerCase().trim();
+                
+                let filtered = allPrompts;
+                
+                if (currentFilter !== 'all') {
+                    filtered = filtered.filter(p => p.category === currentFilter);
+                }
+                
+                if (val) {
+                    filtered = filtered.filter(p => 
+                        (p.text || '').toLowerCase().includes(val) || 
+                        (p.author || '').toLowerCase().includes(val)
+                    );
+                }
+                
+                renderPrompts(filtered);
+            });
+            
+            // 键盘快捷键
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    input.focus();
+                }
+            });
+        }
+
+        // 初始化
+        function init() {
+            initTailwind();
+            loadPrompts();
+            initSearch();
+            
+            // 默认排序
+            setTimeout(() => {
+                const sortSelect = document.getElementById('sort-select');
+                if (sortSelect) sortSelect.value = 'likes';
+            }, 500);
+            
+            // 欢迎提示
+            setTimeout(() => {
+                console.log('%c[Awesome GPT-Image-2] 网站已就绪！', 'color:#6366f1');
+            }, 1000);
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
